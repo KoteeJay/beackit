@@ -19,22 +19,12 @@
         <div class="row">
             <div class=" main-page col-lg-8">
                 <div class="row">
-                    <h1>Your Posts</h1>
-    @if($posts->isEmpty())
-        <p>No posts yet. Start creating one!</p>
-    @else
-        @foreach($posts as $post)
-            <div class="post">
-                <h2>{{ $post->body }}</h2>
-                @if($post->image)
-                    <img src="{{ asset('storage/' . $post->image) }}" alt="Post Image" style="max-width: 100%; height: auto;">
-                @endif
-                <p><small>Posted on {{ $post->created_at->format('M d, Y') }}</small></p>
-                <a href="{{ route('posts.show', $post->slug) }}">Read More</a>
-            </div>
-            <hr>
-        @endforeach
-    @endif
+                    @if($posts->isEmpty())
+                    <p>No posts yet. Start creating one!</p>
+                    @endif
+                    @foreach ($posts as $Post)     
+                            <x-posts.post-card :post="$Post"/>
+                    @endforeach
 
                 </div>
             </div>

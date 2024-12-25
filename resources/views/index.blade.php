@@ -11,7 +11,7 @@
                         @foreach ($Posts as $Post)     
                             <x-posts.post-card :post="$Post"/>
                         @endforeach
-
+                       
                     </div>
 
                 </div>

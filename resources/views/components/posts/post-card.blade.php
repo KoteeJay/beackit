@@ -12,7 +12,7 @@
         </div>
     </div>
     <div class="px-3 blog-post" id="post-{{ $post->id }}">
-        <span class="short-text">
+        <span class="short-text" style="display: inline;">
             {{ Str::limit($post->body, 200) }}
         </span>
         <span class="full-text" style="display: none;">
@@ -34,6 +34,9 @@
 
         buttons.forEach(span => {
             span.addEventListener('click', (e) => {
+                // Log to the console
+                console.log('Button clicked');
+
                 const postId = e.target.dataset.postId;
                 const postElement = document.querySelector(`#post-${postId}`);
 
@@ -44,13 +47,14 @@
                 // Toggle visibility
                 if (fullText.style.display === 'none') {
                     shortText.style.display = 'none';
-                    fullText.style.display = 'inline';
-                    button.textContent = '';
-                } else {
-                    shortText.style.display = 'inline';
-                    fullText.style.display = 'none';
-                    button.textContent = 'Read More';
-                }
+                    fullText.style.display = 'inline';  // changed to block for better visibility
+                    button.textContent = ''; // change button text
+                } 
+                // else {
+                //     shortText.style.display = 'inline';  // show short text
+                //     fullText.style.display = 'none';
+                //     button.textContent = 'Read More';  // revert button text
+                // }
             });
         });
     });
