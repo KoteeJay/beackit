@@ -12,16 +12,7 @@
         </div>
     </div>
     <div class="px-3 blog-post" id="post-{{ $post->id }}">
-        <span class="short-text" style="display: inline;">
-            {{ Str::limit($post->body, 200) }}
-        </span>
-        <span class="full-text" style="display: none;">
-            {{ $post->body }}
-        </span>
-        @if (strlen($post->body) > 200)
-        <span class="read-more-btn" style="color: #61b2ff; cursor: pointer" data-post-id="{{ $post->id }}">Read More</span>
-        @endif
-        {{-- <p class="card-text">{{ $post->body }}</p> --}}
+        {{ $slot }}
     </div>
     <img src="{{ $post->image }}" class="card-img-top mt-3" alt="...">
     <div class="d-flex align-items-center my-3 like px-5">

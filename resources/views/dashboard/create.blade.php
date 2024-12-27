@@ -25,7 +25,7 @@
                         @endif
                         <div class="card">
                             <div class="card-body">
-                                <form action="{{ route('dashboard.store') }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('dashboard.store') }}" method="POST" id="upload-form" enctype="multipart/form-data">
                                     @csrf
                                     <img id="imagePreview" style="display: none; max-width: 300px; margin-top: 10px; border-radius: 8px">
 
@@ -68,6 +68,15 @@
                                             reader.readAsDataURL(imageInput.files[0]);
                                         }
                                     }
+                                    document.getElementById('upload-form').addEventListener('submit', function (e) {
+                                        const image = document.getElementById('upload-file').files[0];
+                                        const maxSize = 2040 * 1024; // 2040 KB in bytes
+
+                                        if (image && image.size > maxSize) {
+                                            e.preventDefault();
+                                            alert('The image size must not exceed 2 MB.');
+                                        }
+                                    });
                                 </script>
                             
                                 <!-- End floating Labels Form -->

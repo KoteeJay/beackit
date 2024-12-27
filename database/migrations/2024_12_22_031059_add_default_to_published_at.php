@@ -13,7 +13,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->timestamp('published_at')->default(DB::raw('CURRENT_TIMESTAMP'))->change();
+            $table->dropColumn('published_at'); // Drop the column first
+            $table->timestamp('published_at')->nullable()->default(DB::raw('CURRENT_TIMESTAMP')); 
         });
     }
 

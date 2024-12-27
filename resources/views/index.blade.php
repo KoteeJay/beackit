@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+@livewire('search-box')
 <x-sidebar />
 <main id="main" class="main">
 
@@ -9,7 +10,19 @@
                 <div class="row">
                     <div class=" col-md-12">
                         @foreach ($Posts as $Post)     
-                            <x-posts.post-card :post="$Post"/>
+                            <x-posts.post-card :post="$Post">
+                                <span class="short-text" style="display: inline;">
+                                    {{ Str::limit($Post->body, 200) }}
+                                </span>
+                                <span class="full-text" style="display: none;">
+                                    {{ $Post->body }}
+                                </span>
+                                @if (strlen($Post->body) > 200)
+                                <span class="read-more-btn" style="color: #61b2ff; cursor: pointer" data-post-id="{{ $Post->id }}">Read More</span>
+                                @endif
+                            </x-posts.post-card>
+
+
                         @endforeach
                        
                     </div>

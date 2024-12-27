@@ -9,13 +9,7 @@
     </div>
     <!-- End Logo -->
 
-    <div class="search-bar m-auto">
-        <form class="search-form d-flex align-items-center" method="POST" action="#">
-            @csrf
-            <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-            <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-        </form>
-    </div>
+    <livewire:search-box />
     <!-- End Search Bar -->
 
     <nav class="header-nav ms-auto">

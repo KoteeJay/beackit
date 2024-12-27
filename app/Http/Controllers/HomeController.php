@@ -11,7 +11,7 @@ class HomeController extends Controller
 {
     public function index(){
         return view('index', [
-            'Posts' => Post::latest()->take(3)->get()
+            'Posts' => Post::latest()->get()
         ]);
     }
 }
