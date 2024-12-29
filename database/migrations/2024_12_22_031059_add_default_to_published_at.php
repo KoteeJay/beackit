@@ -13,8 +13,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->dropColumn('published_at'); // Drop the column first
-            $table->timestamp('published_at')->nullable()->default(DB::raw('CURRENT_TIMESTAMP')); 
+            if (!Schema::hasColumn('posts', 'published_at')) {
+                $table->timestamp('published_at')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'))->after('created_at'); // Add it with default value
+            } else {
+                $table->timestamp('published_at')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'))->change(); // Ensure it has the default value
+            }
         });
     }
 
@@ -24,7 +27,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->timestamp('published_at')->default(null)->change();
+            if (Schema::hasColumn('posts', 'published_at')) {
+                $table->dropColumn('published_at'); // Drop the column if it exists
+            }
         });
     }
 };

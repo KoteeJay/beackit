@@ -14,7 +14,7 @@ class DashboardController extends Controller
     public function dashboard()
     {
         return view('dashboard', [
-            'posts' => auth()->user()->posts()->latest()->take(3)->get()
+            'posts' => auth()->user()->posts()->latest()->take(10)->get()
         ]);
 
     }

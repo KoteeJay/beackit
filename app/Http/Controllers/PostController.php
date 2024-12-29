@@ -26,26 +26,10 @@ class PostController extends Controller
             'body' => 'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
-
-    //    if(request()->hasFile('image')){
-    //     $path = public_path().'/uploads/images';
-    //     $file = $request->image;
-    //     $fileName = date('YmdHi').$file->getClientOriginalName();
-    //     $img = Image::make($file->path());
-    //     $img->resize(100,100, function($constraint){
-    //         $constraint->aspectRatio();
-    //     })->save($path.'/'.$fileName,90);
-    //    }
         
         $slug = Str::slug($request->body); // Generate slug from body
         $shortSlug = Str::limit($slug, 50, ''); // Shorten the slug
 
-        // Post::create([
-        //     'body' => $request->body,
-        //     'image' => $request->file('image')->store('images', 'public'),
-        //     'user_id' => Auth::id(),
-        //     'slug' => $shortSlug,
-        // ]);
         $imagePath = null;
 
         if ($request->hasFile('image')) {
@@ -56,14 +40,23 @@ class PostController extends Controller
             'body' => $request->body,
             'image' => $imagePath,
             'user_id' => Auth::id(),
-             'slug' => $shortSlug,
+            'slug' => $shortSlug,
             'published_at' => now(),
         ]);
 
         return redirect()->back()->with('status', 'Post created successfully');
     
     }
+    public function like(Post $post)
+    {
+        $post->likes()->create(['user_id' => auth()->id()]);
+        return back();
+    }
 
-
+    public function unlike(Post $post)
+    {
+        $post->likes()->where('user_id', auth()->id())->delete();
+        return back();
+    }
 
 }

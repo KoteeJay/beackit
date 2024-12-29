@@ -23,7 +23,7 @@
                     <p>No posts yet. Start creating one!</p>
                     @endif
                     @foreach ($posts as $Post)     
-                            <x-posts.post-card :post="$Post"/>
+                        <x-posts.post-card :post="$Post"/>
                     @endforeach
 
                 </div>

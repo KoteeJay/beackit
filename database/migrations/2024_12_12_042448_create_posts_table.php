@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('slug', 70)->unique();
             $table->text('body');
 
-            $table->timestamp('published_at');
+            // $table->timestamp('published_at');
             $table->softDeletes();
             $table->timestamps();
         });

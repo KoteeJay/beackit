@@ -10,40 +10,38 @@
                 <div class="row">
                     <div class=" col-md-12">
                         @foreach ($Posts as $Post)     
-                            <x-posts.post-card :post="$Post">
-                                <span class="short-text" style="display: inline;">
-                                    {{ Str::limit($Post->body, 200) }}
-                                </span>
-                                <span class="full-text" style="display: none;">
-                                    {{ $Post->body }}
-                                </span>
-                                @if (strlen($Post->body) > 200)
-                                <span class="read-more-btn" style="color: #61b2ff; cursor: pointer" data-post-id="{{ $Post->id }}">Read More</span>
-                                @endif
-                            </x-posts.post-card>
-
-
+                            <x-posts.post-card :post="$Post" />
+                            <!-- Comment Section -->
+                            <div class="comments">
+                                <h4>Comments</h4>
+                                @foreach ($Post->comments as $comment)
+                                    <div class="comment">
+                                        <p>{{ $comment->body }}</p>
+                                        <small>By {{ $comment->user->name }} on {{ $comment->created_at->diffForHumans() }}</small>
+                                    </div>
+                                @endforeach
+                                @auth
+                                    <form action="{{ route('comments.store') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="post_id" value="{{ $Post->id }}">
+                                        <textarea name="body" rows="3" required></textarea>
+                                        <button type="submit">Add Comment</button>
+                                    </form>
+                                @endauth
+                            </div>
                         @endforeach
-                       
                     </div>
-
                 </div>
             </div>
             <!-- End Left side columns -->
-
             <!-- Right side columns -->
             <div class="col-lg-4">
-
                 <!-- Available -->
                 <x-available />
-                
                 <!-- End Available -->
-
             </div>
             <!-- End Right side columns -->
-
         </div>
     </section>
-
 </main>
 @endsection

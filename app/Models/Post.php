@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Models;
+use App\Models\Like;
 use App\Models\User;
-
+use App\Models\Comment;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -16,7 +18,8 @@ class Post extends Model
         'body',
         'image',
         'user_id',
-        'slug'
+        'slug',
+        'published_at',
     ];
     public function user()
     {
@@ -38,6 +41,23 @@ class Post extends Model
                 $post->body = Str::limit($post->body, 2000, '');
             }
         });
+    }
+    public function likes()
+    {
+        // return $this->belongsToMany(User::class, 'likes', 'post_id', 'user_id');
+        return $this->hasMany(Like::class);
+    }
+
+    public function like($id)
+    {
+        $post = Post::findOrFail($id);
+        $post->likes()->attach(Auth::id());
+
+        return back();
+    }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 
 }

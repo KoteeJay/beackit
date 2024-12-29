@@ -4,7 +4,7 @@
         <img src="{{ asset('assets/img/profile-img.jpg') }}" alt="">
         <div class="mx-3 d-flex justify-content-between align-items-center w-100 mt-3">
             <div>
-                <h5>Justice Kote</h5>
+                <h5>{{ $post->user->name }} </h5>
             </div>
 
             <i class="bi bi-three-dots-vertical"></i>
@@ -12,12 +12,44 @@
         </div>
     </div>
     <div class="px-3 blog-post" id="post-{{ $post->id }}">
-        {{ $slot }}
+        <span class="short-text" style="display: inline;">
+            {{ Str::limit($post->body, 200) }}
+        </span>
+        <span class="full-text" style="display: none;">
+            {{ $post->body }}
+        </span>
+        @if (strlen($post->body) > 200)
+        <span class="read-more-btn" style="color: #61b2ff; cursor: pointer" data-post-id="{{ $post->id }}">Read More</span>
+        @endif
     </div>
     <img src="{{ $post->image }}" class="card-img-top mt-3" alt="...">
-    <div class="d-flex align-items-center my-3 like px-5">
-        <i class="bi bi-hand-thumbs-up mb-3"></i>
+    <div>
+        @auth
+        @if($post->likes->where('user_id', auth()->id())->count())
+            <form action="{{ route('posts.unlike', $post) }}" method="POST">
+                @csrf
+                <div class="d-flex justify-content-start align-items-center px-3 py-2">
+                    <button class=".unlike-btn" type="submit" style="border: none; background: none;" ><i class="bi bi-hand-thumbs-up-fill"  ></i></i></button>
+                    <p>{{ $post->likes->count() }}</p>
+    
+                </div>
+            </form>
+        @else
+            <form action="{{ route('posts.like', $post->id) }}" method="POST">
+                @csrf
+                <div class="d-flex justify-content-start align-items-center px-3 py-2">
+                    <button class="like-btn" type="submit" style="border: none; background: none;" ><i class="bi bi-hand-thumbs-up"  ></i></i></button>
+                    <p>{{ $post->likes->count() }}</p>
+    
+                </div>            </form>
+        @endif
+        @else
+        <button onclick="showLoginPrompt()" class="like-btn" type="submit" style="border: none; background: none;" ><i class="bi bi-hand-thumbs-up"  ></i></i></button>
+
+        @endauth
     </div>
+</div>
+   
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -49,4 +81,29 @@
             });
         });
     });
+    document.addEventListener('click', function (e) {
+    if (e.target.matches('.like-btn') || e.target.matches('.unlike-btn')) {
+        e.preventDefault();
+
+        const form = e.target.closest('form');
+        const url = form.action;
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            },
+        })
+        .then(response => response.text())
+        .then(() => {
+            location.reload(); // Reload the page to update the like count
+        })
+        .catch(error => console.error('Error:', error));
+    }
+    });
+    function showLoginPrompt() {
+        if (confirm('You need to log in to like this post. Do you want to log in now?')) {
+            window.location.href = '{{ route('login') }}?redirect_to=' + encodeURIComponent(window.location.href);
+        }
+    }
 </script>
