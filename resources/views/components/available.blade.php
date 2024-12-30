@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <!-- End activity item-->
-                <a href="contact.html" class="btn btn-primary">Contact Us</a>
+                <a href="#" class="btn btn-primary">Contact Us</a>
             </div>
 
         </div>

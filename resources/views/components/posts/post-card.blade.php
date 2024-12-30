@@ -7,7 +7,7 @@
                 <h5>{{ $post->user->name }} </h5>
             </div>
 
-            <i class="bi bi-three-dots-vertical"></i>
+            {{ $slot }}
 
         </div>
     </div>
@@ -23,34 +23,22 @@
         @endif
     </div>
     <img src="{{ $post->image }}" class="card-img-top mt-3" alt="...">
-    <div>
-        @auth
-        @if($post->likes->where('user_id', auth()->id())->count())
-            <form action="{{ route('posts.unlike', $post) }}" method="POST">
-                @csrf
-                <div class="d-flex justify-content-start align-items-center px-3 py-2">
-                    <button class=".unlike-btn" type="submit" style="border: none; background: none;" ><i class="bi bi-hand-thumbs-up-fill"  ></i></i></button>
-                    <p>{{ $post->likes->count() }}</p>
-    
-                </div>
-            </form>
-        @else
-            <form action="{{ route('posts.like', $post->id) }}" method="POST">
-                @csrf
-                <div class="d-flex justify-content-start align-items-center px-3 py-2">
-                    <button class="like-btn" type="submit" style="border: none; background: none;" ><i class="bi bi-hand-thumbs-up"  ></i></i></button>
-                    <p>{{ $post->likes->count() }}</p>
-    
-                </div>            </form>
-        @endif
-        @else
-        <button onclick="showLoginPrompt()" class="like-btn" type="submit" style="border: none; background: none;" ><i class="bi bi-hand-thumbs-up"  ></i></i></button>
 
-        @endauth
+    <div class="d-flex justify-content-between my-3">
+
+        <!-- Other post content -->
+        
+            <livewire:like-button :post="$post" />
+            {{-- <livewire:comment-button /> --}}
+            <div class="mx-3" style="font-size: 20px">
+                <a href="{{ route('posts.show', $post->slug) }}"><i class="bi bi-chat"></i></a>
+            </div>
+         
+        
     </div>
 </div>
    
-</div>
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const buttons = document.querySelectorAll('.read-more-btn');
@@ -73,11 +61,7 @@
                     fullText.style.display = 'inline';  // changed to block for better visibility
                     button.textContent = ''; // change button text
                 } 
-                // else {
-                //     shortText.style.display = 'inline';  // show short text
-                //     fullText.style.display = 'none';
-                //     button.textContent = 'Read More';  // revert button text
-                // }
+                
             });
         });
     });

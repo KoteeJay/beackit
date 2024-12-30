@@ -48,13 +48,11 @@ class Post extends Model
         return $this->hasMany(Like::class);
     }
 
-    public function like($id)
+    public function likedBy()
     {
-        $post = Post::findOrFail($id);
-        $post->likes()->attach(Auth::id());
-
-        return back();
+        return $this->belongsToMany(User::class, 'likes', 'post_id', 'user_id')->withTimestamps();
     }
+ 
     public function comments()
     {
         return $this->hasMany(Comment::class);

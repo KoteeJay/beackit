@@ -4,11 +4,11 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Add Post</h1>
+        <h1>Edit Post</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard')}}">Dashboard</a></li>
-                <li class="breadcrumb-item active">Post</li>
+                <li class="breadcrumb-item active">Edit post</li>
             </ol>
         </nav>
     </div>
@@ -25,13 +25,22 @@
                         @endif
                         <div class="card">
                             <div class="card-body">
-                                <form action="{{ route('dashboard.store') }}" method="POST" id="upload-form" enctype="multipart/form-data">
+                                <form action="{{ route('posts.update', $post->id) }}" method="POST" id="upload-form" enctype="multipart/form-data">
                                     @csrf
+                                    @method('PUT')
+                                    
+                                    <div class="form-group mt-3">
+                                        
+                                        @if ($post->image)
+                                            <img src="{{ asset('storage/' . $post->image) }}" alt="Post Image" class="img-thumbnail mt-3" width="200" >
+                                        @endif
+                                    </div>
+                                    
                                     <img id="imagePreview" style="display: none; max-width: 300px; margin-top: 10px; border-radius: 8px">
 
                                     <div class="col-12">
                                         <div class="form-floating mt-5">
-                                            <textarea class="form-control" name="body" placeholder="content" id="floatingTextarea" style="height: 200px;"></textarea>
+                                            <textarea class="form-control" name="body" placeholder="content" id="floatingTextarea" style="height: 200px;"> {{ $post->body}} </textarea>
                                             <label for="floatingTextarea">Enter your content</label>
                                             @error('body')
                                                 <span class="text-danger"> {{ $message}} </span>
@@ -45,6 +54,7 @@
                                         </label>
 
                                         <input type="file" id="upload-file" name="image" class="upload-input mx-5" accept="image/*" onchange="previewImage(event)">
+                                        
                                         @error('image')
                                                 <span class="text-danger"> {{ $message}} </span>
                                             @enderror

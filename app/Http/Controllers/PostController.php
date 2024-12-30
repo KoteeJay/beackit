@@ -47,16 +47,41 @@ class PostController extends Controller
         return redirect()->back()->with('status', 'Post created successfully');
     
     }
-    public function like(Post $post)
+    public function show(Post $post)
     {
-        $post->likes()->create(['user_id' => auth()->id()]);
-        return back();
+        return view('show', [
+            'Posts' => $post->id,
+        ]);
+    }
+    
+    public function edit(Post $post)
+    {
+        return view('dashboard.edit', compact('post'));
     }
 
-    public function unlike(Post $post)
+    public function update(Request $request, Post $post)
     {
-        $post->likes()->where('user_id', auth()->id())->delete();
-        return back();
+        $request->validate([
+            'body' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+
+        $post->body = $request->body;
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images', 'public');
+            $post->image = $imagePath;
+        }
+
+        $post->save();
+
+        return redirect()->route('dashboard')->with('success', 'Post updated successfully.');
+    }
+    public function destroy(Post $post)
+    {
+        $post->delete();
+
+        return redirect()->route('dashboard')->with('success', 'Post deleted successfully.');
     }
 
 }

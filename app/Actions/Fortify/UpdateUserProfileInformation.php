@@ -4,6 +4,7 @@ namespace App\Actions\Fortify;
 
 use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
@@ -13,9 +14,10 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     /**
      * Validate and update the given user's profile information.
      *
+     * @param  \App\Models\User  $user
      * @param  array<string, mixed>  $input
      */
-    public function update(User $user, array $input): void
+    public function update($user, array $input): void
     {
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
@@ -24,7 +26,18 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
         ])->validateWithBag('updateProfileInformation');
 
         if (isset($input['photo'])) {
-            $user->updateProfilePhoto($input['photo']);
+            // Delete the old photo if it exists
+            if ($user->profile_photo_path) {
+                Storage::disk('public')->delete($user->profile_photo_path);
+            }
+
+            // Store the new photo
+            $path = $input['photo']->store('profile-photos', 'public');
+
+            // Update the user's profile photo path
+            $user->forceFill([
+                'profile_photo_path' => $path,
+            ])->save();
         }
 
         if ($input['email'] !== $user->email &&
@@ -41,6 +54,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     /**
      * Update the given verified user's profile information.
      *
+     * @param  \App\Models\User  $user
      * @param  array<string, string>  $input
      */
     protected function updateVerifiedUser(User $user, array $input): void

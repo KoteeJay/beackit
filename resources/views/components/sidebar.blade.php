@@ -9,21 +9,8 @@
             </a>
         </li>
         <!-- End Home Nav -->
-        @auth
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ url('dashboard')}}">
-                <i class="bi bi-grid"></i>
-                <span>Dashboard</span>
-            </a>
-        </li>
-        <!-- End Blank Page Nav -->
-        @endauth
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ route('home.index')}}">
-                <i class="bi bi-grid"></i>
-                <span>Post</span>
-            </a>
-        </li>
+       {{$slot }}
+       
 
     </ul>
     <div class="available">

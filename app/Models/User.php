@@ -30,6 +30,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'profile_photo_path',
+        'about',
+        'company',
+        'specialization',
+        'phone',
+        'country',
     ];
 
     /**
@@ -65,9 +71,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class);
     }
-    public function likedPosts()
+    public function likes()
     {
-        return $this->belongsToMany(Post::class, 'likes');
+        return $this->belongsToMany(Post::class, 'likes', 'user_id', 'post_id')->withTimestamps();
     }
 
 }

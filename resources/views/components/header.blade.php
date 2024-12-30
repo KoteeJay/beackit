@@ -24,7 +24,7 @@
             </li>
             <!-- End Search Icon-->
 
-            <li class="nav-item dropdown">
+            {{-- <li class="nav-item dropdown">
 
                 <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                     <i class="bi bi-bell"></i>
@@ -61,7 +61,7 @@
                 </ul>
                 <!-- End Notification Dropdown Items -->
 
-            </li>
+            </li> --}}
 
             <!-- End Notification Nav -->
             <li class="nav-item dropdown pe-3">
@@ -75,9 +75,8 @@
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                     <li class="dropdown-header">
-                        <h6>    {{ auth()->user()->name }}
-                        </h6>
-                        <span>Admin</span>
+                        <h6>    {{ auth()->user()->name }}         </h6>
+                        
                     </li>
                     <li>
                         <hr class="dropdown-divider">
