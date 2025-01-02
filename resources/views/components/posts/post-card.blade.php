@@ -1,7 +1,7 @@
 @props(['post'])
 <div class="main-card my-5">
     <div class="px-3 d-flex profile justify-content-start align-items-center">
-        <img src="{{ asset('assets/img/profile-img.jpg') }}" alt="">
+        <img src="{{ $post->user->profile_photo_path ? asset('storage/' . $post->user->profile_photo_path) : asset('default-profile.png') }}" alt=" Profile photo ">
         <div class="mx-3 d-flex justify-content-between align-items-center w-100 mt-3">
             <div>
                 <h5>{{ $post->user->name }} </h5>
@@ -31,7 +31,7 @@
             <livewire:like-button :post="$post" />
             {{-- <livewire:comment-button /> --}}
             <div class="mx-3" style="font-size: 20px">
-                <a href="{{ route('posts.show', $post->slug) }}"><i class="bi bi-chat"></i></a>
+                <a href="{{ route('posts.show', $post->slug) }}"><i class="bi bi-chat"></i> {{ $post->comments->count() }} </a>
             </div>
          
         

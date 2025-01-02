@@ -48,7 +48,7 @@
                         <x-posts.post-card :post="$post">
                             <div class="dropdown">
                                 <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Edit <i class="bi bi-pen-fill"></i>
+                                    Edit
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="{{ route('posts.edit', $post->id) }}">Edit post</a></li>
