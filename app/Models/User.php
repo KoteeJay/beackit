@@ -4,22 +4,39 @@ namespace App\Models;
 
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Filament\Panel;
+use App\Models\Post;
+use Laravel\Sanctum\HasApiTokens;
+use Laravel\Jetstream\HasProfilePhoto;
+use Illuminate\Notifications\Notifiable;
+use Filament\Models\Contracts\FilamentUser;
+use Laravel\Fortify\TwoFactorAuthenticatable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Fortify\TwoFactorAuthenticatable;
-use Laravel\Jetstream\HasProfilePhoto;
-use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Models\Post;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+
+    const role_admin = 'admin';
+    const role_prof = 'prof';
+    const role_user = 'user';
+
+    const role =[
+        self::role_admin => 'admin',
+        self::role_prof => 'prof',
+        self::role_user => 'user',
+    ];
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return $this-> user_type === self::role_admin;
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -36,6 +53,7 @@ class User extends Authenticatable
         'specialization',
         'phone',
         'country',
+        'user_type',
     ];
 
     /**

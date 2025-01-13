@@ -82,12 +82,16 @@
                         <hr class="dropdown-divider">
                     </li>
 
-                    <li>
-                        <a href="{{ route('dashboard')}}" class="dropdown-item d-flex align-items-center">
-                            <i class="bi bi-person"></i>
-                            <span>Dashboard</span>
-                        </a>
-                    </li>
+                    @auth
+                        @if(auth()->user()->user_type !== 'user')
+                            <li>
+                                <a href="{{ route('dashboard') }}" class="dropdown-item d-flex align-items-center">
+                                    <i class="bi bi-person"></i>
+                                    <span>Dashboard</span>
+                                </a>
+                            </li>
+                        @endif
+                    @endauth
                     <li>
                         <hr class="dropdown-divider">
                     </li>

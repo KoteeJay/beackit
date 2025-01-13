@@ -48,7 +48,7 @@
                         alt="{{ $user->name }}" 
                         style="width: 100px; height: 100px; border-radius: 50%;">
                                            <h2>{{ $user->name }}  </h2>
-                        <h3>Web Designer</h3>
+                        <h3>{{ $user->specialization }}</h3>
                         <div class="social-links mt-2">
                             <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
                             <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>

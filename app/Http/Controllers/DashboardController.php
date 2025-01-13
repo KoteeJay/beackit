@@ -11,8 +11,14 @@ class DashboardController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function dashboard()
+    public function index()
     {
+        $user = Auth::user();
+
+        if ($user->user_type === 'user') {
+            return redirect()->route('home.index'); // Redirect regular users to the home page
+        }
+
         return view('dashboard', [
             'posts' => auth()->user()->posts()->latest()->take(10)->get()
         ]);

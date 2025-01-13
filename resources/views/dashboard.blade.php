@@ -41,6 +41,9 @@
         <div class="row">
             <div class=" main-page col-lg-8">
                 <div class="row">
+                    <div>
+                        <strong>User Type:</strong> {{ auth()->user()->user_type }}
+                    </div>
                     @if($posts->isEmpty())
                     <p>No posts yet. Start creating one!</p>
                     @endif

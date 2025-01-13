@@ -39,7 +39,7 @@ Route::get('/posts/{postId}', ShowPost::class)->name('posts.show');
 
 Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
 
-Route::get('/dashboard', [DashboardController::class, 'dashboard'])->middleware('auth')->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
 
 
 
