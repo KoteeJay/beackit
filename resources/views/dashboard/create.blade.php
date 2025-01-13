@@ -1,3 +1,4 @@
+@section('title', 'New post')
 @extends('layouts.app')
 @section('content')
 <x-sidebar />

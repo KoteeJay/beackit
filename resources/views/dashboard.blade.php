@@ -1,3 +1,4 @@
+@section('title', 'Dashboard')
 @extends('layouts.app')
 @section('content')
 <x-sidebar>
@@ -9,7 +10,7 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('home.index')}}">
+        <a class="nav-link collapsed" href="{{ route('dashboard.create')}}">
             <i class="bi bi-grid"></i>
             <span>Post</span>
         </a>
@@ -41,9 +42,7 @@
         <div class="row">
             <div class=" main-page col-lg-8">
                 <div class="row">
-                    <div>
-                        <strong>User Type:</strong> {{ auth()->user()->user_type }}
-                    </div>
+                    
                     @if($posts->isEmpty())
                     <p>No posts yet. Start creating one!</p>
                     @endif

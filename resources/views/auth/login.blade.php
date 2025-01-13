@@ -1,3 +1,6 @@
+<title>@yield('title', 'Beack')</title>
+<link rel="icon" href="{{ asset('favicon.PNG') }}" type="image/x-icon">
+
 <x-guest-layout>
     <x-authentication-card>
         <x-slot name="logo">

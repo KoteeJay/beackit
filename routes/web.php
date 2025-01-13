@@ -9,6 +9,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Auth\GoogleController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/posts/{post:slug}', [HomeController::class, 'show'])->name('posts.show');
@@ -48,6 +49,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/profile', [ProfileControl
 Route::middleware(['auth:sanctum', 'verified'])->put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
 
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
 // Route::middleware([
 //     'auth:sanctum',

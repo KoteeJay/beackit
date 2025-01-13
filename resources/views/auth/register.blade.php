@@ -1,5 +1,7 @@
+<title>@yield('title', 'Beack')</title>
+<link rel="icon" href="{{ asset('favicon.PNG') }}" type="image/x-icon">
 <x-guest-layout>
-    <x-authentication-card>
+      <x-authentication-card>
         <x-slot name="logo">
             <x-authentication-card-logo />
         </x-slot>
@@ -28,6 +30,13 @@
                 <x-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
                 <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
             </div>
+            <div class="mt-4 bg-primary">
+                <x-button2>
+                    Sign in with google
+                </x-button2>
+            </div>
+            
+            
 
             @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
                 <div class="mt-4">
