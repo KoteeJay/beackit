@@ -30,9 +30,9 @@
                 <x-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
                 <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
             </div>
-            <div class="mt-4 bg-primary">
+            <div class="mt-4 bg-danger">
                 <x-button2>
-                    Sign in with google
+                    <i class="bi bi-google"></i>Sign up with google
                 </x-button2>
             </div>
             

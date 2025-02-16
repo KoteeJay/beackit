@@ -1,17 +1,19 @@
 @props(['post'])
-<div class="main-card my-5">
-    <div class="px-3 d-flex profile justify-content-start align-items-center">
-        <img src="{{ $post->user->profile_photo_path ? asset('storage/' . $post->user->profile_photo_path) : asset('default-profile.png') }}" alt=" Profile photo ">
-        <div class="mx-3 d-flex justify-content-between align-items-center w-100 mt-3">
+<div class="main-card my-5 px-2">
+    <div class="d-flex profile justify-content-start align-items-center">
+        
+        <img src="{{ asset('storage/' . $post->user->profile_photo_path) }}" alt="User Profile Photo">
+
+        <div class="mx-2 d-flex justify-content-between align-items-center w-100">
             <div>
-                <h5>{{ $post->user->name }} </h5>
+                <h5 style="white-space: nowrap">{{ $post->user->name }} </h5>
             </div>
 
             {{ $slot }}
 
         </div>
     </div>
-    <div class="px-3 blog-post" id="post-{{ $post->id }}">
+    <div class="blog-post mt-3" id="post-{{ $post->id }}" style="overflow: hidden; word-wrap: break-word; overflow-wrap: break-word; white-space: normal;">
         <span class="short-text" style="display: inline;">
             {{ Str::limit($post->body, 200) }}
         </span>
@@ -19,10 +21,12 @@
             {{ $post->body }}
         </span>
         @if (strlen($post->body) > 200)
-        <span class="read-more-btn" style="color: #61b2ff; cursor: pointer" data-post-id="{{ $post->id }}">Read More</span>
+        <span class="read-more-btn" style="color: #61b2ff; cursor: pointer" data-post-id="{{ $post->id }}">Continue reading</span>
         @endif
     </div>
-    <img src="{{ $post->image }}" class="card-img-top mt-3" alt="...">
+    <div class="post-image">
+        <img src="{{ asset('storage/' . $post->image) }}" class="image" alt="Post Image">
+    </div>
 
     <div class="d-flex justify-content-between my-3">
 

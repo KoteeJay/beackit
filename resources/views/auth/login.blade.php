@@ -28,6 +28,12 @@
                 <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
             </div>
 
+            <div class="mt-4 bg-danger">
+                <x-button2>
+                    <i class="bi bi-google"></i>Sign up with google
+                </x-button2>
+            </div>
+            
             <div class="flex justify-items-end mt-4 ">
                 <label for="remember_me" class=" items-start ">
                     <x-checkbox id="remember_me" name="remember" />

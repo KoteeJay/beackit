@@ -2,13 +2,9 @@
 @extends('layouts.app')
 @section('content')
 <x-sidebar>
+
     
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ url('dashboard')}}">
-            <i class="bi bi-grid"></i>
-            <span>Dashboard</span>
-        </a>
-    </li>
+    
     <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('dashboard.create')}}">
             <i class="bi bi-grid"></i>
@@ -33,22 +29,25 @@
                 <li class="breadcrumb-item"><a href="{{ route('dashboard')}}">Dashboard</a></li>
                 <li class="breadcrumb-item active">Dashboard</li>
             </ol>
-            <a href="{{ route('dashboard.create') }} " class="btn btn-primary float-end">Create new post <i class="bi bi-pen-fill"></i></a>
 
         </nav>
     </div>
+    <!-- Toast Container -->
+    <div id="toast-message" class="toast" style="display: none;">
+        <span id="toast-text"></span>
+    </div>
     <!-- End Page Title -->
     <section class="section dashboard">
-        <div class="row">
+        <div class="w-100">
             <div class=" main-page col-lg-8">
-                <div class="row">
+                <div class="">
                     
                     @if($posts->isEmpty())
                     <p>No posts yet. Start creating one!</p>
                     @endif
                     @foreach ($posts as $post)     
                         <x-posts.post-card :post="$post">
-                            <div class="dropdown">
+                            <div class="dropdown" style="margin-left: 70px">
                                 <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Edit
                                 </button>
@@ -73,10 +72,28 @@
 
 </main>
 <!-- End #main -->
+!-- Check if there's a session message and pass it to JavaScript -->
+@if(session('success'))
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var toast = document.getElementById("toast-message");
+            var toastText = document.getElementById("toast-text");
 
+            toastText.innerText = "{{ session('success') }}"; // Set message
+            toast.style.display = "block"; // Show toast
+
+            // Hide toast after 4 seconds
+            setTimeout(function () {
+                toast.style.display = "none";
+            }, 8000);
+        });
+    </script>
+@endif
 <script>
     function confirmDelete() {
         return confirm('Are you sure you want to delete this post?');
     }
+    
 </script>
+
 @endsection

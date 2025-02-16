@@ -2,7 +2,7 @@
 @section('content')
 @livewire('search-box')
 <x-sidebar />
-<main id="main" class="main">
+<main id="main" class="main" style="margin: 0px;">
 
     <section class="section dashboard">
         <div class="row">

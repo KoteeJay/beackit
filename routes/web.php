@@ -1,12 +1,15 @@
 <?php
 
 use App\Livewire\ShowPost;
+use Laravel\Fortify\Fortify;
 use Filament\Pages\Dashboard;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\GoogleController;
@@ -42,8 +45,10 @@ Route::post('/comments', [CommentController::class, 'store'])->name('comments.st
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
 
-
-
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
+Route::post('/contact', [ContactController::class, 'sendMail'])->name('contact.send');
 // Ensure the user is authenticated to access the profile page
 Route::middleware(['auth:sanctum', 'verified'])->get('/profile', [ProfileController::class, 'show'])->name('dashboard.profile');
 Route::middleware(['auth:sanctum', 'verified'])->put('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -51,6 +56,10 @@ Route::middleware(['auth:sanctum', 'verified'])->put('/profile', [ProfileControl
 
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
 Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+
+Fortify::resetPasswordView(function ($request) {
+    return view('auth.reset-password', ['request' => $request]);
+});
 
 // Route::middleware([
 //     'auth:sanctum',

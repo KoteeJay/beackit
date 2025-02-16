@@ -44,7 +44,8 @@ class PostController extends Controller
             'published_at' => now(),
         ]);
 
-        return redirect()->back()->with('status', 'Post created successfully');
+        return redirect()->route('dashboard')->with('success', 'Post created successfully!');
+
     
     }
     public function show(Post $post)
@@ -75,7 +76,7 @@ class PostController extends Controller
 
         $post->save();
 
-        return redirect()->route('dashboard')->with('success', 'Post updated successfully.');
+        return redirect()->route('dashboard')->with('success', 'Post updated successfully!');
     }
     public function destroy(Post $post)
     {

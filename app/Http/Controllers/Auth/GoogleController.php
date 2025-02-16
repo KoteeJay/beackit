@@ -25,7 +25,7 @@ class GoogleController extends Controller
                 'name' => $googleUser->getName(),
                 'google_id' => $googleUser->getId(),
                 'avatar' => $googleUser->getAvatar(),
-                'password' => bcrypt('default_password'), // Use a secure default or null
+                'password' => bcrypt('BeackUser321'), // Use a secure default or null
             ]
         );
 

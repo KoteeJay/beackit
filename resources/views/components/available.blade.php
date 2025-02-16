@@ -22,7 +22,7 @@
                     <div class="activite-label">32 min</div>
                     <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
                     <div class="activity-content">
-                        <a href="#" class="fw-bold text-dark">Chukwuemeka Noble</a> is available
+                        <a href="#" class="fw-bold text-dark">Noble</a> available
                     </div>
                 </div>
                 <!-- End activity item-->
@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <!-- End activity item-->
-                <a href="#" class="btn btn-primary">Contact Us</a>
+                <a href="{{ route('contact') }}" class="btn btn-primary">Contact Us</a>
             </div>
 
         </div>
